@@ -3,5 +3,6 @@ from tareas import views
 
 urlpatterns=[
     path('tareas',views.tareasApi),
-    path('tareas/<id>', views.tareasApi)
+    path('tareas/<id>', views.tareasApi),
+    path('getId', views.getId)
 ]

@@ -1,31 +1,57 @@
 <!DOCTYPE html>
 <html lang="es-cl">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Checklist</title>
 </head>
-<body>
-    <h1 class="container">SIISISISIISISI</h1>
-    <button id="get">Get</button>
-    <div>
+
+<body class="container">
+
+    <h1 class="container">Checklist</h1>
+    <div id="textpost">
         <input type="text" name="inputpost" id="inputpost">
+        <button id="post">Agregar tarea</button>
     </div>
-    <button id="post">Post</button>
     <div>
-        <input placeholder="id" type="text" name="inputputid" id="inputputid">
-        <input type="text" name="inputput" id="inputput">
+        <h4 id="lista"></h4>
+        <div id="contenedorTareas"></div>
+
+
     </div>
-    <button id="put">Put</button>
-    <div>
-        <input placeholder="id" type="text" name="inputdel" id="inputdel">
+    <div class="modal fade" id="modaleditar">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar tarea</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="editar-tarea">
+                    <input type="text" name="inputput" id="inputput">
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="editar" >Editar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <button id="delete">Delete</button>
-    <h4 id="texto">
-    <h4 id="textid">
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/index.js"></script>
 </body>
+
 </html>

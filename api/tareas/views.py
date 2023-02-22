@@ -7,6 +7,8 @@ from .models import Tareas
 from .serializers import TareasSerializer
 from datetime import datetime
 from django.utils import timezone
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
 # Create your views here.
@@ -14,7 +16,7 @@ from django.utils import timezone
 @csrf_exempt
 def tareasApi(request, id=0):
     if request.method=='GET':
-        tareas = Tareas.objects.all()
+        tareas = Tareas.objects.all().order_by("TareaId","CreacionTarea")
         tareas_serializer=TareasSerializer(tareas,many=True)
         return JsonResponse(tareas_serializer.data, safe=False)
     elif request.method=='POST':
@@ -36,3 +38,9 @@ def tareasApi(request, id=0):
         tareas=Tareas.objects.get(TareaId=id)
         tareas.delete()
         return JsonResponse("Tarea eliminada",safe=False)
+
+@api_view(["GET"])
+def getId(request):
+    id = request.GET.get('id_tarea')
+    tareas = Tareas.objects.filter(TareaId = id).values()
+    return Response(tareas)
