@@ -16,11 +16,17 @@ mostrar = (e)  => {
             id = JSON.stringify(resp.data[i]["TareaId"]);
             elstatus = resp.data[i]["Status"];
             timestamp = resp.data[i]["CreacionTarea"];
+            actualizartime = resp.data[i]["ActualizacionTarea"];
+            let formatoact = new Date(actualizartime)
             let formato = new Date(timestamp)
+            let horasact = formatoact.getHours()+':'+formatoact.getMinutes() 
             let horas = formato.getHours()+':'+formato.getMinutes() 
-            contenedor +="<h2>"+' '+ nombre +' '+ elstatus +' '+ horas +' '+
-            "</h2> <br/>" + "<button id='delete' onclick='eliminar("+ id +")'> Delete </button>" + 
-            "<button id='btneditar' data-toggle='modal' data-target='#modaleditar' onclick='editar("+ id +")' > Editar </button>" 
+            contenedor +="<div class='col-10'  id='tarea' > <strong id='nombre' onclick=estadoRealizado("+ id +")>"+ nombre +
+            " </strong> <br/> <small id='status'>"
+            + elstatus +" </small> <br/> <small id='horas'>"
+
+            + horas + "<br/> </small>  </div> <div class='col-2' > " + 
+            " <span > <img id='btneditar' data-toggle='modal' data-target='#modaleditar' class='img-fluid' onclick='editar("+ id +")' src='img/lapiz.png' > </span > <br/> </div>" 
 
             $('#contenedorTareas').html(contenedor)
 
@@ -32,6 +38,30 @@ mostrar = (e)  => {
 };
 
 
+estadoRealizado = (id) =>{
+    axios.get('http://10.0.1.45:3000/getId',{
+        params:{
+            id_tarea: id
+        }
+    })
+    .then((resp)=>{
+        nombre = resp.data[0]["TareaNombre"]
+        
+    })
+    console.log(nombre)
+    axios.put(url, {
+        TareaId: id,
+        TareaNombre : nombre,
+        Status : 'Realizada'
+        
+    }).then(res => {
+        location.reload()
+    }).catch(err =>{
+        console.log(err)
+    })
+        
+    
+}
 
 
 
