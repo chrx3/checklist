@@ -1,67 +1,158 @@
-url = 'http://10.0.1.45:3000/tareas'
+url = 'http://192.168.100.24:8000/tareas'
 
 // window.addEventListener("load", () => setTimeout(function(){
 //     /* stuff */
 // }, 3000));
 
 //Mostrar
-mostrar = (e)  => {
+const mostrar = () => {
     axios.get(url)
-
     .then(resp => {
-        contenedor = '';
-
-        for( i = 0 ; i < resp.data.length; i++){
-            nombre = resp.data[i]["TareaNombre"];
-            id = JSON.stringify(resp.data[i]["TareaId"]);
-            elstatus = resp.data[i]["Status"];
-            timestamp = resp.data[i]["CreacionTarea"];
-            actualizartime = resp.data[i]["ActualizacionTarea"];
-            let formatoact = new Date(actualizartime)
-            let formato = new Date(timestamp)
-            let horasact = formatoact.getHours()+':'+formatoact.getMinutes() 
-            let horas = formato.getHours()+':'+formato.getMinutes() 
-            contenedor +="<div class='col-10'  id='tarea' > <strong id='nombre' onclick=estadoRealizado("+ id +")>"+ nombre +
-            " </strong> <br/> <small id='status'>"
-            + elstatus +" </small> <br/> <small id='horas'>"
-
-            + horas + "<br/> </small>  </div> <div class='col-2' > " + 
-            " <span > <img id='btneditar' data-toggle='modal' data-target='#modaleditar' class='img-fluid' onclick='editar("+ id +")' src='img/lapiz.png' > </span > <br/> </div>" 
-
-            $('#contenedorTareas').html(contenedor)
-
+        let contenedor = '';
+        for (let i = 0; i < resp.data.length; i++) {
+            const tarea = resp.data[i];
+            const nombre = tarea["TareaNombre"];
+            const id = JSON.stringify(tarea["TareaId"]);
+            const elstatus = tarea["Status"];
+            const timestamp = new Date(tarea["CreacionTarea"]).toLocaleTimeString();
+            if (elstatus == "Por hacer") {
+                contenedor += `<div class='col-9' id='tarea' >
+                <div onclick="cambiarEstado(${id}, '${nombre}', '${elstatus}')">
+                    <strong id='nombre'>${nombre}</strong> <br/>
+                    <small id='status'>${elstatus}</small> <br/>
+                    <small id='horas'>${timestamp}<br/></small>
+                </div>
+                    
+                    <button id='alarma' onclick="alarma1m(${id}, '${nombre}', '${elstatus}')"> Alarma de 1 minuto <br/></button>
+                </div>
+                <div id='tarea' class='col-3'>
+                    <span>
+                        <img id='btneditar' data-toggle='modal' onclick=editar(${id}) data-target='#modaleditar' class='img-fluid' src='img/lapiz.png'>
+                    </span><br/>
+                </div>`;
+            }
         }
-            
+        $('#contenedorTareas').html(contenedor);
     });
-
-
 };
 
-
-estadoRealizado = (id) =>{
-    axios.get('http://10.0.1.45:3000/getId',{
-        params:{
-            id_tarea: id
+const mostrarHistorial = () => {
+    axios.get(url)
+    .then(resp => {
+        let contenedor = '';
+        for (let i = 0; i < resp.data.length; i++) {
+            const tarea = resp.data[i];
+            const nombre = tarea["TareaNombre"];
+            const id = JSON.stringify(tarea["TareaId"]);
+            const elstatus = tarea["Status"];
+            const timestamp = new Date(tarea["ActualizacionTarea"]).toLocaleTimeString();
+            if (elstatus == "Realizada" || elstatus == "No Realizada") {
+                contenedor += `<div class='col-9' id='tarea' onclick="cambiarEstado(${id}, '${nombre}', '${elstatus}')">
+                    <strong id='nombre'>${nombre}</strong> <br/>
+                    <small id='status'>${elstatus}</small> <br/>
+                    <small id='horas'> A las: ${timestamp}<br/></small>
+                    
+                </div>
+                <div id='tarea' class='col-3'>
+                    <span>
+                        <img id='btneditar' data-toggle='modal' onclick=eliminar(${id}) class='img-fluid' src='img/basura.png'>
+                    </span><br/>
+                </div>`;
+            }
         }
-    })
-    .then((resp)=>{
-        nombre = resp.data[0]["TareaNombre"]
-        
-    })
-    console.log(nombre)
-    axios.put(url, {
+        $('#contenedorTareas').html(contenedor);
+    });
+};
+const cambiarEstado = (id, nombre, elstatus) => {
+    const nuevoStatus = elstatus === "Realizada" ? "Por hacer" : "Realizada";
+    axios.put(`${url}`, {
         TareaId: id,
-        TareaNombre : nombre,
-        Status : 'Realizada'
-        
-    }).then(res => {
-        location.reload()
-    }).catch(err =>{
-        console.log(err)
+        TareaNombre: nombre,
+        Status: nuevoStatus
     })
+    .then(resp => {
+        console.log(resp.data);
+        location.reload()
+     // actualiza las tareas mostradas
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
+alarma1m = (id, nombre, elstatus) =>{
+    let tiempoRestante = 0.1 * 60; // 15 minutos en segundos
+
+    const contador = setInterval(() => {
+        const minutos = Math.floor(tiempoRestante / 60);
+        const segundos = tiempoRestante % 60;
+        console.log('empieza el tiempo')
+        
+        if (tiempoRestante === 0) {
+            clearInterval(contador); // detiene el contador cuando se llega a cero
+            alert('Tienes una tarea pendiente')
+            alert('La tarea vencerá en un minuto')
+            let tiempoRestante2 = 0.1 * 60; // 15 minutos en segundos
+        
+                const contador2 = setInterval(() => {
+                    const minutos2 = Math.floor(tiempoRestante2 / 60);
+                    const segundos2 = tiempoRestante2 % 60;
+                    
+                    console.log('tiempo')
+                    if (tiempoRestante2 === 0) {
+                        const nuevoStatus = elstatus = "No Realizada";
+                        axios.put(`${url}`, {
+                            TareaId: id,
+                            TareaNombre: nombre,
+                            Status: nuevoStatus
+                        })
+                        .then(resp => {
+                            
+                            location.reload()
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+
+                    }else {
+                        tiempoRestante2--;
+                    }
+                    
+                    // actualiza las tareas mostradas
+                }, 1000); // llama a la función cada segundo (1000 ms)
+            
+        } else {
+            tiempoRestante--;
+        }
+    }, 1000); // llama a la función cada segundo (1000 ms)
+} // aquí se cierra la función alarma1m
+
+
+
+// estadoRealizado = (id) =>{
+//     axios.get('http://192.168.100.24:8000/getId',{
+//         params:{
+//             id_tarea: id
+//         }
+//     })
+//     .then((resp)=>{
+//         nombre = resp.data[0]["TareaNombre"]
+        
+//     })
+//     console.log(nombre)
+//     axios.put(url, {
+//         TareaId: id,
+//         TareaNombre : nombre,
+//         Status : 'Realizada'
+        
+//     }).then(res => {
+//         location.reload()
+//     }).catch(err =>{
+//         console.log(err)
+//     })
         
     
-}
+// }
 
 
 
@@ -76,8 +167,14 @@ botonpost.addEventListener("click",(e) => {
     })
 
     .then(resp => {
-       
+       if(!inpost){
+        e.preventDefault();
+        mensaje = 'Ingrese un valor porfavor'
+        document.getElementById('validador').innerText = mensaje
+       }else{
         location.reload()
+       }
+        
         
         
     }).catch( (err) =>  {
@@ -88,8 +185,6 @@ botonpost.addEventListener("click",(e) => {
     });
 
 });
-
-mostrar();
 
 function eliminar(id){
     axios.delete(url+'/'+id,{
@@ -110,7 +205,7 @@ function eliminar(id){
 }
 
 function editar(id){
-    axios.get('http://10.0.1.45:3000/getId',{
+    axios.get('http://192.168.100.24:8000/getId',{
         params:{
             id_tarea: id
         }

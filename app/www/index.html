@@ -10,21 +10,27 @@
     <title>Checklist</title>
 </head>
 
-<body class="container">
+<body class="container" onload=mostrar()>
+    
     <div id="textpost">
+        <div class="img-fluid" id="flechita">
+            <a   style="color: inherit;
+            text-decoration: none;" href="historial.html"><img width="10%" height="10%" src="img/historial.png" alt=""></a>
+        </div>
         <div id="titulo" class="text-center">
+            
             <h1>Checklist</h1>
         </div>
         
         <div class="row pb-5" id="AgregarTarea"> 
-            <input class="col-10"  placeholder="Ingrese una tarea" type="text" name="inputpost" id="inputpost">
-            <div class="col-2">
+            <input class="col-9"  placeholder="Ingrese una tarea" type="text" id="inputpost">
+            
+            <div class="col-3">
                 <span >
                     <img class="iconadd  img-fluid" id="post" src="img/add.png">
                 </span>
             </div>
-            
-    
+            <p id="validador"></p>
         </div>
     </div>     
     <div id="contenedorTareas" class="row">
@@ -38,22 +44,19 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title text-center">Editar tarea</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
+                
 
                 <!-- Modal body -->
-                <div class="modal-body" id="editar-tarea">
-                    <input type="text" name="inputput" id="inputput">
-                    <button id="editar" class="btn btn-warning" >Editar</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    
+                <div class="row" id="editar-tarea">
+                    <h1>Editar Tarea</h1>
+                    <input type="text" class="col-9" name="inputput" id="inputput">
+                    <div  class=" col-3 ">
+                        
+                        <span id="botones">
+                            <img  id="editar" class="iconedit img-fluid" src="img/confirm.png" alt="">
+                            <img  id="cancelar" class="img-fluid" data-dismiss="modal" src="img/error.png">
+                        </span>
+                    </div>
                 </div>
 
             </div>
