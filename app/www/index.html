@@ -17,9 +17,9 @@
             <a   style="color: inherit;
             text-decoration: none;" href="historial.html"><img width="10%" height="10%" src="img/historial.png" alt=""></a>
         </div>
-        <div id="titulo" class="text-center">
+        <div  class="text-center">
             
-            <h1>Checklist</h1>
+            <h1 id="titulo">Checklist</h1>
         </div>
         
         <div class="row pb-5" id="AgregarTarea"> 
@@ -42,13 +42,16 @@
     
     <div class="modal fade" id="modaleditar">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content" id="estilomodal">
+                <div class="modal-header">
+                    
+                    <h1 class="modal-title" id="tituloeditar">Editar Tarea</h1>
 
+                </div>
                 
 
                 <!-- Modal body -->
                 <div class="row" id="editar-tarea">
-                    <h1>Editar Tarea</h1>
                     <input type="text" class="col-9" name="inputput" id="inputput">
                     <div  class=" col-3 ">
                         

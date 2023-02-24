@@ -1,4 +1,4 @@
-url = 'http://192.168.100.24:8000/tareas'
+url = 'http://10.0.1.45:3000/tareas'
 
 // window.addEventListener("load", () => setTimeout(function(){
 //     /* stuff */
@@ -48,7 +48,7 @@ const mostrarHistorial = () => {
             const timestamp = new Date(tarea["ActualizacionTarea"]).toLocaleTimeString();
             if (elstatus == "Realizada" || elstatus == "No Realizada") {
                 contenedor += `<div class='col-9' id='tarea' onclick="cambiarEstado(${id}, '${nombre}', '${elstatus}')">
-                    <strong id='nombre'>${nombre}</strong> <br/>
+                    <h1 id='nombre'>${nombre}</h1> <br/>
                     <small id='status'>${elstatus}</small> <br/>
                     <small id='horas'> A las: ${timestamp}<br/></small>
                     
@@ -205,7 +205,7 @@ function eliminar(id){
 }
 
 function editar(id){
-    axios.get('http://192.168.100.24:8000/getId',{
+    axios.get('http://10.0.1.45:3000/getId',{
         params:{
             id_tarea: id
         }

@@ -1,35 +1,43 @@
 body{
-    background: linear-gradient(to right, #74ebd5, #ACB6E5);
+    background-image: linear-gradient(to bottom, #f0f0f0, #e6e6e6);
 
 }
-h1 {
-    font-size: 5rem;
-    text-align: center;
-    text-shadow: 3px 3px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000;
-    color: #fff;
-  }
-  
+
 input[type=text]:focus {
     transition: 0.5s;
     border: 3px solid #555;
     
 }
 #alarma{
-    
-    background: RGB(255,255,255,0.5);
+    display: inline-block;
+  padding: 10px 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  color: #555;
+  transition: background-color 0.3s ease;
+}
+#alarma:hover{
+    background-color: #eee;
 }
 #titulo{
     margin: 5% auto;
+    font-size: 5rem;
+    text-align: center;
+    text-shadow: 3px 3px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000;
+    color: #fff;
 }
 #nombre{
-    font-size: 2em;
+    font-size: 4em;
   font-weight: bold;
-  text-transform: uppercase;
-  color: #ffffff;
-  text-shadow: 2px 2px #000000;
+  color: #000000;
+  text-shadow: 2px 2px 2px #555555;
 }
 #status{
-    font-size: 1.2rem; /* tamaño de fuente */
+    font-size: 2rem; /* tamaño de fuente */
   font-weight: bold; /* grosor de fuente */
   color: #be8762; /* color de texto */
   text-align: center;
@@ -43,10 +51,10 @@ input[type=text]:focus {
 
 }
 #horas{
-    font-size: 100%;
+    font-size: 2em;
   font-weight: bold;
-  text-shadow: 2px 2px #000000;
-  color: #FFFFFF;
+  color: #000000;
+  text-shadow: 1px 1px 1px #555555;
 }
 #tarea:focus{
     border: 5px solid black;
