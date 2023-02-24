@@ -48,7 +48,7 @@ const mostrarHistorial = () => {
             const timestamp = new Date(tarea["ActualizacionTarea"]).toLocaleTimeString();
             if (elstatus == "Realizada" || elstatus == "No Realizada") {
                 contenedor += `<div class='col-9' id='tarea' onclick="cambiarEstado(${id}, '${nombre}', '${elstatus}')">
-                    <h1 id='nombre'>${nombre}</h1> <br/>
+                    <h1 id='nombre' style='text-decoration:line-through'>${nombre}</h1> <br/>
                     <small id='status'>${elstatus}</small> <br/>
                     <small id='horas'> A las: ${timestamp}<br/></small>
                     

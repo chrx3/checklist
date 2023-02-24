@@ -31,13 +31,13 @@ input[type=text]:focus {
     color: #fff;
 }
 #nombre{
-    font-size: 4em;
-  font-weight: bold;
+    font-size: 1.5em;
   color: #000000;
-  text-shadow: 2px 2px 2px #555555;
+  text-shadow: 2px 1px 2px #555555;
+  
 }
 #status{
-    font-size: 2rem; /* tamaño de fuente */
+    font-size: 1rem; /* tamaño de fuente */
   font-weight: bold; /* grosor de fuente */
   color: #be8762; /* color de texto */
   text-align: center;
@@ -51,7 +51,7 @@ input[type=text]:focus {
 
 }
 #horas{
-    font-size: 2em;
+    font-size: 1em;
   font-weight: bold;
   color: #000000;
   text-shadow: 1px 1px 1px #555555;
